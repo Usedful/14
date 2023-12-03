@@ -1,0 +1,27 @@
+Q.2. Write a python program to find all null values in a given dataset and remove them
+
+Ans ->
+
+import pandas as pd
+
+# Sample dataset (replace this with your dataset)
+data = {'Name': ['Alice', 'Bob', 'Charlie', None, 'Eve'],
+        'Age': [25, 30, None, 22, 35],
+        'Salary': [50000, None, 60000, 45000, 70000]}
+
+df = pd.DataFrame(data)
+
+# Display the original dataset
+print("Original Dataset:")
+print(df)
+
+# Find and display null values in the dataset
+print("\nNull Values in the Dataset:")
+print(df.isnull())
+
+# Remove rows with null values
+df_cleaned = df.dropna()
+
+# Display the dataset after removing null values
+print("\nDataset After Removing Null Values:")
+print(df_cleaned)

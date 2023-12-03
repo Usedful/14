@@ -1,0 +1,145 @@
+Q.1 Write a Java Program to implement Command Design Pattern for Command Interface 
+ with execute() . Use this to create variety of commands for LightOnCommand, 
+LightOffCommand, GarageDoorUpCommand, StereoOnWithCDComman
+
+Ans ->
+
+// Command interface
+interface Command {
+    void execute();
+}
+
+// Concrete Command - LightOnCommand
+class LightOnCommand implements Command {
+    private Light light;
+
+    public LightOnCommand(Light light) {
+        this.light = light;
+    }
+
+    @Override
+    public void execute() {
+        light.turnOn();
+    }
+}
+
+// Concrete Command - LightOffCommand
+class LightOffCommand implements Command {
+    private Light light;
+
+    public LightOffCommand(Light light) {
+        this.light = light;
+    }
+
+    @Override
+    public void execute() {
+        light.turnOff();
+    }
+}
+
+// Concrete Command - GarageDoorUpCommand
+class GarageDoorUpCommand implements Command {
+    private GarageDoor garageDoor;
+
+    public GarageDoorUpCommand(GarageDoor garageDoor) {
+        this.garageDoor = garageDoor;
+    }
+
+    @Override
+    public void execute() {
+        garageDoor.up();
+    }
+}
+
+// Concrete Command - StereoOnWithCDCommand
+class StereoOnWithCDCommand implements Command {
+    private Stereo stereo;
+
+    public StereoOnWithCDCommand(Stereo stereo) {
+        this.stereo = stereo;
+    }
+
+    @Override
+    public void execute() {
+        stereo.on();
+        stereo.setCD();
+        stereo.setVolume(11);
+    }
+}
+
+// Receiver - Light
+class Light {
+    public void turnOn() {
+        System.out.println("Light is ON");
+    }
+
+    public void turnOff() {
+        System.out.println("Light is OFF");
+    }
+}
+
+// Receiver - GarageDoor
+class GarageDoor {
+    public void up() {
+        System.out.println("Garage Door is UP");
+    }
+}
+
+// Receiver - Stereo
+class Stereo {
+    public void on() {
+        System.out.println("Stereo is ON");
+    }
+
+    public void setCD() {
+        System.out.println("CD is set");
+    }
+
+    public void setVolume(int volume) {
+        System.out.println("Volume set to " + volume);
+    }
+}
+
+// Invoker
+class RemoteControl {
+    private Command command;
+
+    public void setCommand(Command command) {
+        this.command = command;
+    }
+
+    public void pressButton() {
+        command.execute();
+    }
+}
+
+// Client code
+public class CommandPatternExample {
+    public static void main(String[] args) {
+        RemoteControl remote = new RemoteControl();
+
+        // Creating instances of receivers
+        Light livingRoomLight = new Light();
+        GarageDoor garageDoor = new GarageDoor();
+        Stereo stereo = new Stereo();
+
+        // Creating command instances
+        LightOnCommand lightOn = new LightOnCommand(livingRoomLight);
+        LightOffCommand lightOff = new LightOffCommand(livingRoomLight);
+        GarageDoorUpCommand garageDoorUp = new GarageDoorUpCommand(garageDoor);
+        StereoOnWithCDCommand stereoOnWithCD = new StereoOnWithCDCommand(stereo);
+
+        // Assigning commands to remote
+        remote.setCommand(lightOn);
+        remote.pressButton();
+
+        remote.setCommand(lightOff);
+        remote.pressButton();
+
+        remote.setCommand(garageDoorUp);
+        remote.pressButton();
+
+        remote.setCommand(stereoOnWithCD);
+        remote.pressButton();
+    }
+}
